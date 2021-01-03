@@ -15,51 +15,145 @@
 			}
 			table#regTable td {
 				text-align:center;
-				border:1px dashed olive;
+				border:1px solid olive;
+				padding:10px;
 			}
 			input[type="text"] {
 				border:0;
-				border-bottom:1px solid blue;
+				border:1px solid #95b8e7;
 			}
 			table#regTable tr td:eq(0) {
 				text-align:right;
 				margin-right:10px;
 			}
+			#loginname{
+				height: 21px;
+    			border-radius: 6px;
+			}
+			.textbox{
+				height: 21px;
+    			border-radius: 6px;
+			}
+			.birthday{
+				url
+			}
 		</style>
-		<script src="js/jquery-1.3.2.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/easyui.css">
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="js/easyui-lang-zh_CN.js"></script>
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 		<script src="js/calendar.js"></script>
+		<script>
+			
+			$(document).ready(function (){
+			$("#loginname").blur(function(){
+				var loginname=$("#loginname").val();
+				//alert(loginname);
+				if(loginname==""){
+				$('#msg').html("准考证号为空！");
+				$('#msg').css({"color":"red","font-size":"12px"});
+				}
+				else{
+					$.post("/testweb/checkName",{userName:loginname},function(data){
+					//alert(data.trim().length==);
+					if(data.trim()=="用户名已注册！"){
+					//alert(1);
+						$('#msg').html(data);
+						$('#msg').css({"color":"red","font-size":"12px"});
+					}
+					else{
+						$('#msg').html(data);
+						$('#msg').css({"color":"green","font-size":"12px"});
+						$("#msg").css({"display":"block"});
+					}
+						
+					})
+				}
+			});
+			$("#confirm_password").blur(function(){
+				var password=$("#password").val();
+				//alert(password);
+				var confirm_pass=$("#confirm_password").val();
+				if(password==""){//如果未输入密码
+					//alert(password);
+					$('#msg_pass').html("请输入密码！");
+					//alert(password);
+					$('#msg_pass').css({"color":"red","font-size":"12px"});
+					$('#msg_pass').fadeOut(2000);
+				}
+				else{//如果输入了密码
+					if(password!=confirm_pass){
+						$('#msg_confirm_pass').html("密码不一致！");
+						$('#msg_confirm_pass').css({"color":"red","font-size":"12px"});
+					}
+				}	
+			});
+			 /* $("#phoneNum").focus(function(){
+				var phoneNum=$("#phoneNum").val();
+				if(phoneNum.length==11){
+				$("#msg_phone").css("display","none");
+				}
+				
+			});  */
+			$("#phoneNum").blur(function(){
+				//
+				var phoneNum=$("#phoneNum").val();
+				//alert(phoneNum.length);
+				if(phoneNum==""){
+					$('#msg_phone').html("请输入手机号！");
+					$('#msg_phone').css({"color":"red","font-size":"12px"});
+					$('#msg_phone').fadeOut(2000);
+				}
+				else{
+					if(phoneNum.length>=12||phoneNum.length<=10){
+						$("#msg_phone").css("display","block");
+						alert(phoneNum.length);
+						$('#msg_phone').html("手机号位数不正确！");
+						$('#msg_phone').css({"color":"red","font-size":"12px"});
+						$('#msg_phone').fadeOut(2000);//结束了变为none
+					}
+				}
+			});
+			 //日期表添加
+			$("#birthday").blur(function(){
+				//alert(1);
+				//alert($("#birthday").val());
+			});
+			});
+		</script>
 	</head>
 	<body>
 		<h1 align='center'>请注册</h1>
-		<form id="regForm" action="reg.action" method="post"> 
+		<form id="regForm" action="/testweb/reg.action" method="post" > 
 			<table id="regTable">
 				<tr>
-					<th COLSPAN="3">(想要考的好，注册必须好)</th>
+					<th COLSPAN="3"></th>
 				</tr>
 				<tr>
-					<td width="80">准考证号：</td>
-					<td width="180" colspan="2"><input id="loginname" name="loginname" type="text" placeholder="只填数字"/></td>
+					<td style="width:80px;">准考证号：</td>
+					<td style="width:180px;" colspan="2"><input class="textbox"  id="loginname" name="loginname" type="text"  /><span id="msg" style="display:block"></span></td>
 				</tr>
 				<tr>
-					<td width="80">姓名：</td>
-					<td width="180" colspan="2"><input name="uname" type="text"/></td>
+					<td style="width:80px;">姓名：</td>
+					<td style="width:180px;" colspan="2"><input class="textbox" name="uname" type="text"/></td>
 				</tr>
 				<tr>
 					<td>密码：</td>
-					<td colspan="2"><input required type="password" name="password" id="password"/></td>
+					<td colspan="2"><input class="textbox" required type="password" name="password" id="password"/><span id="msg_pass" style="display:block"></span></td>
 					
 				</tr>
 				<tr>
 					<td>确认密码：</td>
-					<td colspan="2"><input required type="password" name="confirm_password" id="confirm_password"/></td>
+					<td colspan="2"><input class="textbox" required type="password" name="confirm_password" id="confirm_password"/><span id="msg_confirm_pass" style="display:block"></span></td>
+				</tr> 
+				<tr>
+					<td style="width:80px;">电子邮箱：</td>
+					<td style="width:180px;" colspan="2"><input class="easyui-textbox" id="email" data-option="validType:'email'" name="email" type="email"/></td>
 				</tr>
 				<tr>
-					<td width="80">电子邮箱：</td>
-					<td width="180" colspan="2"><input id="email" name="email" type="text"/></td>
-				</tr>
-				<tr>
-					<td width="80">手机号：</td>
-					<td width="180" colspan="2"><input name="phone" type="text" placeholder="11位有效数字"/></td>
+					<td style="width:80px;">手机号：</td>
+					<td style="width:180px;" colspan="2"><input id="phoneNum" class="textbox" name="phone" type="text" placeholder="请输入11位号码！"/><span id="msg_phone" style="display:block"></span></td>
 				</tr>
 				<tr>
 					<td>性别：</td>
@@ -68,17 +162,19 @@
 				</tr>
 				<tr>
 					<td>出生日期</td>
-					<td colspan="2"><input type="text" name="birth" readonly class="calen"/></td>
+					<td colspan="2"><input class="calen textbox" autocomplete="off" id="birthday" name="birthday"/></td>
 				</tr>
 				<tr>
 					<td colspan="3">
-						<input type="reset"/>
-						<input type="submit" value="立即注册"/>
+						<input class="easyui-linkbutton" id="reset" style="width:55px;height:25px;position: relative;left: 30px;" type="reset"/>
+						<input class="easyui-linkbutton" id="submit" style="width:65px;height:25px;position: relative;left: 30px;" type="submit" value="立即注册"/>
 					</td>
 				</tr>
 			</table>
+			<!-- <div id="cc" class="easyui-calendar"></div> -->
 		</form>
 	</body>
+	
 </html>
 
 <!--

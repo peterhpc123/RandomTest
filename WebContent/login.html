@@ -3,11 +3,23 @@
 	<head>
 		<META charset="utf-8"/>
 		<link rel ="stylesheet"  href="/testweb/css/bg.css">
+		<link rel="stylesheet" type="text/css" href="css/easyui.css">
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="js/easyui-lang-zh_CN.js"></script>
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+		<!-- <script src="js/snow.js"></script> -->
+		<script src="http://www.jq22.com/jquery/1.9.1/jquery.min.js"></script>
+
+		<script src="js/common.js"></script>
+
+		<link  type="text/css" rel="stylesheet" href="css/style.css" />
 		<style>
 		
 			body {
 				margin:0 auto;
-				
+				font-size:16px;
+				font: 14px/1.5 "Helvetica Neue",Helvetica,Arial,"Microsoft Yahei","Hiragino Sans GB","Heiti SC","WenQuanYi Micro Hei",sans-serif;
 			}
 			#advLayer {
 				width:100%;
@@ -27,65 +39,228 @@
 				font-style:italic;
 			}
 			table#regTable {
-				margin:0 auto;
+				margin:10px auto;
 				width:400px;
 				border:0;
 				border-collapse:collapse;
+				border-radius:10px;
 			}
 			table#regTable td {
 				text-align:center;
-				border:1px dashed olive;
+				border:1px solid olive;
+				padding: 10px 20px;
 			}
-			input[type="text"] {
+			table#regTable_teacher td{
+				text-align:center;
+				border:1px solid olive;
+				padding: 10px 20px;
+			}
+			table#regTable_teacher{
+				margin:10px auto;
+				width:400px;
 				border:0;
-				border-bottom:1px solid blue;
+				border-collapse:collapse;
+				border-radius:10px;
+			}
+			
+			input[type="text"],input[type="password"]{
+				border:0;
+				border:1px solid #95b8e7;
+			}
+			input[type="password"]:focus,input[type="text"]:focus{
+				border:0;
+				border:1px solid #95b8e7;
 			}
 			table#regTable tr td:eq(0) {
 				text-align:right;
 				margin-right:10px;
 			}
+			p{
+				margin:0;
+				padding:0;
+			}
+			a{
+			color:blue;
+			}
+			
+			#findPass{
+			padding-right:129px;
+			}
+			.textbox{
+				height: 21px;
+    			border-radius: 6px;
+			}
+			.linkbutton{
+			height:20.4px;
+			color: #444;
+			border: 1px solid #bbb;
+			border-radius: 5px 5px 5px 5px; 
+			-webkit-border-radius:5px 5px 5px 5px; 
+			cursor:pointer;
+			line-height: 0px;
+			background: linear-gradient(to bottom,#ffffff 0,#eeeeee 100%);
+			
+			}
+			.linkbutton:hover {
+			    background: #eaf2ff;
+			    color: #000000;
+			    border: 1px solid #b7d2ff;
+			    filter: none;
+			}
+			.snow-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 100001; }
 		</style>
 		<script>
-			function $(id){
+			$(document).ready(function(){
+				
+				$("#login").click(function(){
+				var loginname=$("#loginname").val();
+				//alert(1);
+				var password=$("#password").val();
+				if(loginname==""||password==""){
+				//alert(2);
+					$("#msg").html("准考证名或密码为空！")
+					$("#msg").css({"color":"red","display":"block"});
+					setTimeout(function(){$("#msg").fadeOut(0)},2000);
+					//alert(3);
+				}
+				else{
+				 	$.post("/testweb/login.action",{loginname:loginname,password:password},function(data){
+				 	//alert(data.trim()=="抱歉，您的用户名或密码输入错误！请重新输入！");
+				 	if(data.trim()=="抱歉，您的用户名或密码输入错误！请重新输入！"){
+				 		$("#msg").html(data);
+				 		$("#msg").css({"color":"red","font-size":"12px"});
+				 	}else{
+				 		alert("登录成功！");
+				 		$("#regSTU").submit();
+				 	}	
+				 	})
+					
+				}
+				});
+				$("#login_T").click(function(){
+				var tno=$("#Tno").val();
+				//alert(1);
+				var password=$("#Tpassword").val();
+				if(tno==""||password==""){
+				//alert(2);
+					$("#msg_T").html("教师证号或密码为空！")
+					$("#msg_T").css({"color":"red","display":"block"});
+					setTimeout(function(){$("#msg_T").fadeOut(0)},2000);
+					//alert(3);
+				}
+				else{
+				 	$.post("/testweb/user/teacherManage",{Tno:tno,Tpassword:password},function(data){
+					 	if(data.trim()=="抱歉，您的教师编号或密码输入错误！请重新输入！"){
+					 		$("#msg_T").html(data);
+					 		$("#msg_T").css({"color":"red","font-size":"12px"});
+					 	}else{
+					 		alert("登录成功！");
+					 		$("#regTea").submit();
+					 	}
+				 	})
+				}
+				});
+				 $("#login_T").blur(function(){
+					$("#msg_T").css("display","none");
+				}); 
+			})
+			/* function $(id){
 				return document.getElementById(id);			
 			}
-			var ua = navigator.userAgent.toLowerCase();
+			var ua = navigator.userAgent.toLowerCase(); */
 			
-			window.onload = function(){
+			/* window.onload = function(){
 				setInterval(function(){
 					$('advLayer').innerHTML = new Date().toLocaleString();
 				}, 1000);
-			}
+			} */
+			
 		</script>
 		<script src="/testweb/js/jquery-1.3.2.min.js"></script>
 		<script src="/testweb/js/calendar.js"></script>
 	</head>
 	<body >
-		<div id="bg" >
-			<h1 align='center'>欢迎进入考试系统！</h1>
-			<form action="/login.action" method="post">
-				<table id="regTable">
-					<tr>
-						<th COLSPAN="3">考生登录</th>
-					</tr>
-					<tr>
-						<td width="80">准考证号：</td>
-						<td width="180" colspan="2"><input id="loginname" name="loginname" type="text" placeholder="9个数字"/></td>
-					</tr>
-					<tr>
-						<td>密码：</td>
-						<td colspan="2"><input required type="password" name="password" id="password"/></td>
-					</tr>
-					<tr>
-						<td colspan="3">
-							<input type="reset" value="重置"/>
-							<input type="submit" value="登录"/>
-							&nbsp;&nbsp;&nbsp;&nbsp;
-							忘记密码？<a href="reg.html">重新注册</a>
-						</td>
-					</tr>
-				</table>
-			</form>
+	<!-- 雪花背景 -->
+	<!-- <div class="snow-container"></div> -->
+	<!-- 框架 -->
+	<div id="bg" style="width:1360px;height:235px"></div>
+		<div class="easyui-layout" style="width:965px;height:390px;font-size:16px">
+		<div data-options="region:'center',title:'欢迎进入在线考试系统',iconCls:'icon-ok'">
+	<!-- 	框架 -->
+		<div class="investment_f">
+
+  		<div class="investment_title">
+
+    		<div class="on">用户登录</div>
+
+   		 	<div>教师登录</div>
+
+ 		</div>
+
+		<div class="investment_con">
+
+			   <div class="investment_con_list">
+			
+			     <form id="regSTU" action="login.action" method="post">
+						<table id="regTable">
+							<tr>
+								<th COLSPAN="3">考生登录</th>
+							</tr>
+							<tr>
+								<td  style="width:80px">准考证号：</td>
+								<td  style="width:180px" colspan="2"><input class="textbox" autocomplete="off" id="loginname" name="loginname" type="text" placeholder="只填数字"/></td>
+							</tr>
+							<tr>
+								<td>密码：</td>
+								<td colspan="2"><input class="textbox"  autocomplete="off" type="password" name="password" id="password"/></td>
+							</tr>
+							<tr>
+								<td colspan="3">
+								<p id="msg"></p>
+									<input class="easyui-linkbutton" id="reset" type="reset" value="重置" style="width:55px;float:right;margin:0 10px"/>
+									<input class="linkbutton" id="login" type="button" value="登录" style="width:55px;float:right"/>
+									尚未注册？<a href="reg.html">点击注册</a><p id="findPass">忘记密码？<a href="MyHtml.html" >找回密码</a></p>
+								</td>
+							</tr>
+						</table>
+					</form>
+			
+			   </div>
+			
+			   <div class="investment_con_list">
+			
+			     <form id="regTea" action="/testweb/user/teacherManage" method="post">
+						<table id="regTable_teacher" >
+							<tr>
+								<th COLSPAN="3">教师登录</th>
+							</tr>
+							<tr>
+								<td  style="width:80px">教师编号：</td>
+								<td  style="width:180px" colspan="2"><input class="textbox" id="Tno" autocomplete="off" name="Tno" type="text" placeholder="输入数字"/></td>
+							</tr>
+							<tr>
+								<td>密码：</td>
+								<td colspan="2"><input class="textbox"  type="password" name="Tpassword" id="Tpassword"/></td>
+							</tr>
+							<tr>
+								<td colspan="3">
+									<p id="msg_T"></p>
+									<input class="easyui-linkbutton" id="reset_teacher" type="reset" value="重置" style="width:55px;float:right;margin:0 10px"/>
+									<input class="linkbutton" id="login_T" type="button" value="登录" style="width:55px;float:right"/>
+									尚未注册？<a href="reg.html">点击注册</a><p id="findPass">忘记密码？<a href="MyHtml.html" >找回密码</a></p>
+								</td>
+							</tr>
+						</table>
+					</form>
+			
+			   </div>
+
+  		</div>
+
+	</div>
+			
+			
+			</div>
 		</div>
 	</body>
 </html>

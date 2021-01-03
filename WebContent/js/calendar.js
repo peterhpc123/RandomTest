@@ -87,7 +87,7 @@ $(function(){	$('body').attr('focus', 'true');
 		var width = $(this).width();
 		$calen.css({
 			top:offset.top + 20,
-			left:offset.left + width + 20}
+			left:offset.left }
 		).show();
 	}).click(function(e){
 		return false;
@@ -102,6 +102,7 @@ $(function(){	$('body').attr('focus', 'true');
 	$(document).click(function(){
 		$calen.hide();
 	});
-
+	var text=$('#birthday').text();
+	$('#birthday').val(text);
 	
 });

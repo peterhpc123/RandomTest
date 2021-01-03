@@ -1,0 +1,17 @@
+[{
+	"id":"1",
+	"sname":"peter"
+},{
+	"id":"2",
+	"sname":"mm"
+},{
+	"id":"3",
+	"sname":"elizabeth",
+	"selected":true
+},{
+	"id":"4",
+	"sname":"tom"
+},{
+	"id":"5",
+	"sname":"jerry"
+}]

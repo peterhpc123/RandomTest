@@ -49,25 +49,28 @@ public class LoginServlet implements Servlet {
 		UserDAO userDAO = new UserDAO();
 		User user = userDAO.login(loginname, password);
 		PrintWriter out = response.getWriter();
-		out.println("<!DOCTYPE html>");
-		out.println("<html>");
-		out.println("	<head>");
-		out.println("	</head>");
-		out.println("	<body>");
-		if(user != null){			
+		if(user != null){	
+			out.println("<!DOCTYPE html>");
+			out.println("<html>");
+			out.println("	<head>");
+			out.println("	<style>a{color:blue}</style>");
+			out.println("	</head>");
+			out.println("	<body>");
 			((HttpServletRequest)request).getSession().setAttribute("user", user);
 			if("1".equals(user.getUlevel())){
-				out.println("<div align=\"center\">欢迎 " + user.getUname() + ", 登录成功！<a href=\"/user/list.action\">点击进入管理员页面</a></div>");
+				out.println("<div align=\"center\">欢迎 " + user.getUname() + ", 登录成功！<a href=\"/testweb/user/list.action\">点击进入管理考生页面</a></div>");
+				out.println("<div align=\"center\" style=\"padding: 0 0 0 181px\"><a href=\"/testweb/user/manageGrade.action\">点击进入用户成绩界面</div>");
 			}else{
-				out.println("<div align=\"center\">欢迎 " + user.getUname() + ", 登录成功！<a href=\"/test.action\">点击开始考试</a></div>");
+				out.println("<div align=\"center\">欢迎 " + user.getUname() + ", 登录成功！<a href=\"/testweb/test.action?user="+user+"\""+">点击开始考试</a></div>");
 			}
+			out.println("	</body>");
+			out.println("</html>");
+			out.flush();
+			out.close();
 		}else{
-			out.println("<div align=\"center\">登录失败，请重新登录<a href=\"/login.html\">登录</a></div>");
+			out.println("抱歉，您的用户名或密码输入错误！请重新输入！");
 		}         
-		out.println("	</body>");
-		out.println("</html>");
-		out.flush();
-		out.close();
+		
 	}
 
 }

@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>${msg}我是JSP[JSTL-EL-读取pageScope,request, session里存储的对象]</title>
+<title>后台管理界面</title>
 <link rel="stylesheet" href="/onlinetest/css/table.css">
 <script src="/onlinetest/js/jquery-1.3.2.min.js"></script>
 <script src="/onlinetest/js/calendar.js"></script>

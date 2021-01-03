@@ -41,26 +41,27 @@ public class RegServlet implements Servlet {
 		    
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
 		String loginname = request.getParameter("loginname");
 		String password = request.getParameter("password");
 		String email = request.getParameter("email");
 		String phone = request.getParameter("phone");
 		String sex = request.getParameter("sex");
-		String birth = request.getParameter("birth");
+		String birth = request.getParameter("birthday");
 		String uname = request.getParameter("uname");
-		
+		out.println(uname);
+		//out.println(birth);
 		User user = new User(0, loginname, password, email, phone, sex, birth, uname, "0");
 		UserDAO userDAO = new UserDAO();
-		PrintWriter out = response.getWriter();
 		out.println("<!DOCTYPE html>");
 		out.println("<html>");
 		out.println("	<head>");
 		out.println("	</head>");
 		out.println("	<body>");
 		if(userDAO.add(user)){
-			out.println("	恭喜，注册成功！<a href=\"/login.html\">进入登录页面</a>");
+			out.println("	恭喜，注册成功！<a href=\"/testweb/login.html\">进入登录页面</a>");
 		}else{
-			out.println("	抱歉，注册失败！<a href=\"/reg.html\">回到首页</a>");
+			out.println("	抱歉，注册失败！<a href=\"/testweb/reg.html\">回到首页</a>");
 		}
 		out.println("	</body>");
 		out.println("</html>");

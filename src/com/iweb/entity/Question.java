@@ -1,10 +1,6 @@
 package com.iweb.entity;
 
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
-import java.util.Arrays;
-import java.util.Locale;
-import java.util.stream.IntStream;
+
 
 public class Question {
 	private int id;

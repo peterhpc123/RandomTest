@@ -10,7 +10,7 @@ public class BaseDAO {
 
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
 
-	private static final String URL = "jdbc:mysql://localhost:3306/onlinetest";
+	private static final String URL = "jdbc:mysql://localhost:3306/onlinetest?user=root&password=root&useUnicode=true&characterEncoding=utf-8";
 	
 	static {
 		try{
@@ -24,6 +24,7 @@ public class BaseDAO {
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+			System.out.println(conn);
 		}catch(Exception e){
 			e.printStackTrace();
 		}

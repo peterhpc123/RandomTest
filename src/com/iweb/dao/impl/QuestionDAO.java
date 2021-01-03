@@ -18,7 +18,7 @@ import com.iweb.entity.Question;
 public class QuestionDAO extends BaseDAO implements IQuestionDAO {
 
 	@Override
-	public List<Question> single() throws Exception {
+	public List<Question> single() throws Exception {//从数据库中选择所有打乱排序的单选题
 		List<Question> questions = new ArrayList<Question>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -43,7 +43,7 @@ public class QuestionDAO extends BaseDAO implements IQuestionDAO {
 	}
 
 	@Override
-	public List<Question> judgement() throws Exception {
+	public List<Question> judgement() throws Exception {//从数据库中选择所有打乱排序的判断题
 		List<Question> questions = new ArrayList<Question>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -68,7 +68,7 @@ public class QuestionDAO extends BaseDAO implements IQuestionDAO {
 	
 	@Override
 	public boolean remove(int id) throws Exception { 
-		if(true)return true;
+		//if(true)return true;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try{

@@ -10,6 +10,17 @@ public class User {
 	private String birth;
 	private String uname;
 	private String ulevel;
+	public User(){
+		id=0;
+		loginname="";
+		password="";
+		email="";
+		phone="";
+		sex="";
+		birth="";
+		uname="";
+		ulevel="";
+	}
 	public User(int id, String loginname, String password, String email, String phone,
 			String sex, String birth, String uname, String ulevel) {
 		this.id = id;

@@ -28,10 +28,20 @@ public interface IUserDAO {
 	/**
 	 * 检测用户的唯一性
 	 */
-	public int has(String loginname) throws Exception ;
+	public boolean has(String loginname) throws Exception ;
 	
 	/**
 	 * 根据ID查找用户
 	 */
 	public User find(int id) throws Exception ;
+
+	/**
+	 * 
+	 * @param uname
+	 * 根据学生姓名查找该用户
+	 * 
+	 */
+	public List<User> find(String uname) throws Exception;
+
+	List<User> find1(String loginname) throws Exception;
 }

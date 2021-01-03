@@ -41,7 +41,7 @@ public class RemoveUserServlet implements Servlet {
 			throws ServletException, IOException {
 		    
 		request.setCharacterEncoding("utf-8");
-		int id = Integer.parseInt(request.getParameter("id"));
+		int id = Integer.parseInt(request.getParameter("id"));//从后台管理界面传来的用户id
 		
 		UserDAO userDAO = new UserDAO();
 		try{
